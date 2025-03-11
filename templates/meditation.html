@@ -1,0 +1,57 @@
+<div id="meditation">
+	<p>...meditation...</p>
+	<p>{{.Stages}} stages</p>
+	<p>{{.Minutes}} minutes each</p>
+
+	<script>
+	let count = -5
+	let myVar = setInterval(myTimer, 1000);
+	var audio = new Audio('/static/audio/tibetan-bowl-gong.mp3');
+	
+	function myTimer() {
+  		count += 1
+  		if (count % ({{.Minutes}}*60) == 0) {
+  			console.log("gong", count)
+  			audio.play()
+  		}
+  		if (count > {{.Stages}}*{{.Minutes}}*60) {
+  			clearTimeout(myVar)
+  		}
+	}
+	</script>
+
+	<div id="meditation-circles" style="display: flex; justify-content: space-evenly; width: 100%; gap: 10px;">	
+	{{range $element := .List}}
+		<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+			<defs>
+		    	<radialGradient id="radialGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+		     		<stop offset="0%" style="stop-color:lightgrey;stop-opacity:1" /> <!-- Dark center -->
+		      		<stop offset="100%" style="stop-color:darkgrey;stop-opacity:1" /> <!-- Light grey edge -->
+		    	</radialGradient>
+		  	</defs>
+		  	<!-- Circle -->
+		  	<circle cx="50%" cy="50%" r="50%" fill="url(#radialGradient)">
+		    <!-- Opacity Fade Animation -->
+		    <animate
+		  		attributeName="opacity"
+		    	from="1"
+		    	to="0"
+		    	dur="{{.Seconds}}s"
+		    	repeatCount="1"
+		    	fill="freeze"
+		    	begin="{{$element.Delay}}s"
+		    />
+		    <animate
+		  		attributeName="r"
+		    	from="50%"
+		    	to="0%"
+		    	dur="{{.Seconds}}s"
+		    	repeatCount="1"
+		    	fill="freeze"
+		    	begin="{{$element.Delay}}s"
+		    />
+	  		</circle>
+		</svg>
+	{{end}}
+	</div>
+</div>

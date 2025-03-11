@@ -1,0 +1,75 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Stages</title>
+	<script src="https://unpkg.com/htmx.org@1.9.0"></script>
+	<style type="text/css">
+		body {
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-family: Courier New, sans-serif;
+		}
+		p {
+			font-size: 24pt;
+			text-align: center;
+		}
+
+		button, input[type="submit"], input[type="reset"] {
+			background: none;
+			color: inherit;
+			border: none;
+			padding: 0;
+			font: inherit;
+			cursor: pointer;
+			outline: inherit;
+		}
+
+		input {
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<form id="meditation-form" hx-post="/begin" hx-target="#meditation-form" hx-swap="outerHTML">
+		<h1>...stages...</h1>
+		<p>how many? <output id="stages-value"></output></p>
+		<input type="range" id="stages" name="stages" value="2" min="2" max="5" list="stages-markers">
+		<datalist id="stages-markers">
+			<option value="2"></option>
+			<option value="3"></option>
+			<option value="4"></option>
+			<option value="5"></option>
+		</datalist>
+		<p>how long?<br><output id="minutes-value"></output> mins</p>
+		<input type="range" id="minutes" name="minutes" value="1" min="1" max="32" list="minutes-markers">
+		<datalist id="minutes-markers">
+			<option value="5"></option>
+			<option value="10"></option>
+			<option value="15"></option>
+			<option value="20"></option>
+			<option value="25"></option>
+			<option value="30"></option>
+		</datalist>
+		<input type="submit" value="begin" />
+	</form>
+	<script type="text/javascript">
+		const svalue = document.querySelector("#stages-value");
+		const sinput = document.querySelector("#stages");
+		svalue.textContent = sinput.value;
+		sinput.addEventListener("input", (event) => {
+  			svalue.textContent = event.target.value;
+		});
+		const mvalue = document.querySelector("#minutes-value");
+		const minput = document.querySelector("#minutes");
+		mvalue.textContent = minput.value;
+		minput.addEventListener("input", (event) => {
+  			mvalue.textContent = event.target.value;
+		});
+	</script>
+</body>
+</html>
