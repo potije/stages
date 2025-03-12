@@ -1,0 +1,19 @@
+{
+  "build": {
+    "env": {
+      "GO_VERSION": "1.23.4" // Specify the Go version you want to use
+    }
+  },
+  "builds": [
+    {
+      "src": "main.go", // Path to your main Go file
+      "use": "@vercel/go"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
+}
