@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strconv"
+	"time"
 )
 
 type Stage struct {
@@ -51,6 +52,11 @@ func main() {
 	})
 
 	http.HandleFunc("/test", handler)
+
+	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		fmt.Fprintf(w, start.String())
+	})
 
 	http.HandleFunc("/begin", func(w http.ResponseWriter, r*http.Request) {
 		tmplm := template.Must(template.ParseFiles("templates/meditation.html"))

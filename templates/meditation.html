@@ -1,7 +1,8 @@
-<div id="meditation">
+<div id="meditation" hx-get="/ping" hx-trigger="every 1s" hx-target="#pong" hx-swap="innerHTML">
 	<p>...meditation...</p>
 	<p>{{.Stages}} stages</p>
 	<p>{{.Minutes}} minutes each</p>
+
 
 	<script>
 	let count = -5
@@ -10,6 +11,7 @@
 	
 	function myTimer() {
   		count += 1
+  		console.log(count)
   		if (count % ({{.Minutes}}*60) == 0) {
   			console.log("gong", count)
   			audio.play()
@@ -53,5 +55,8 @@
 	  		</circle>
 		</svg>
 	{{end}}
+	</div>
+	<div id="pong">
+		keepalive
 	</div>
 </div>
